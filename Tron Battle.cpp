@@ -3,32 +3,39 @@
 
 using namespace std;
 
+// Size of the map
 const int WIDTH = 30;
 const int HEIGHT = 20;
 
-bool writeInMap(int x0, int y0, int x1, int y1);
-
-void getDistance(int mx, int my, int * left, int * right, int * up, int * down);
-
-int max(int left, int right, int up, int down);
-
+// Map
 int Map[HEIGHT][WIDTH] = {0};
 
+// Current position
 int mx, my;
 
+// Last direction
 int lastDirection = 0;
+
+// Record the visited nodes in the map
+bool writeInMap(int x0, int y0, int x1, int y1);
+
+// Get distance for continuous unvisited nodes
+void getDistance(int mx, int my, int * left, int * right, int * up, int * down);
+
+// Get the direction with longest continuous unvisited nodes
+int max(int left, int right, int up, int down);
 
 int main()
 {
-    // Read init information from standard input, if any
+    
     int n, p, x0, y0, x1, y1, no;
     int left, right, up, down;
     
     
     
     while (1) {
+        
         // Read information from standard input
-
         cin >> n;
         cin >> p;
         
@@ -42,12 +49,16 @@ int main()
             my = y1;
         }
         
+        // Record the visited nodes in the map
         writeInMap(x0, y0, x1, y1);
         
+        // Get distance for continuous unvisited nodes
         getDistance(mx, my, &left, &right, &up, &down);
         
+        // Get the direction with longest continuous unvisited nodes
         int x = max(left, right, up, down);
         
+        // output control varialbe
         if (x == 1) {
             cout << "LEFT" << endl;
             lastDirection = 1;
@@ -70,6 +81,7 @@ int main()
             }
         }
         
+        // for debuging
         cerr << "mx: " << mx << endl;
         cerr << "my: " << my << endl;
         
@@ -88,6 +100,7 @@ int main()
     return 0;
 }
 
+// Record the visited nodes in the map
 bool writeInMap(int x0, int y0, int x1, int y1)
 {
     if (x0 < 30 && x1 < 30 && y0 < 20 && y1 < 20) {
@@ -101,6 +114,7 @@ bool writeInMap(int x0, int y0, int x1, int y1)
     }
 }
 
+// Get distance for continuous unvisited nodes
 void getDistance(int mx, int my, int * left, int * right, int * up, int * down)
 {
     *left = *right = *up = *down = 0;
@@ -131,6 +145,7 @@ void getDistance(int mx, int my, int * left, int * right, int * up, int * down)
 
 }
 
+// Get the direction with longest continuous unvisited nodes
 int max(int left, int right, int up, int down)
 {
     if (lastDirection == 1 && left > 0) {
